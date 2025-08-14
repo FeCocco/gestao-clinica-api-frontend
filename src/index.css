@@ -1,0 +1,22 @@
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+:root {
+    --purple-main: #5D3A9B;
+    --dark-blue-text: #2c3e50;
+    --light-gray-bg: #f8f9fa;
+    --white: #fff;
+    --font-title: 'Poppins', sans-serif;
+    --font-text: 'Roboto', sans-serif;
+}
+
+.section-title {
+    color: var(--dark-blue-text);
+    font-size: 2.2rem;
+    text-align: center;
+    margin-bottom: 50px;
+}

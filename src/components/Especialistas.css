@@ -1,0 +1,15 @@
+h2{
+    color: var(--dark-blue-text);
+    justify-content: center;
+    display: flex;
+}
+
+.especialistas{
+    background-color: var(--light-gray-bg);
+}
+
+.team-grid{
+    display: flex;
+    justify-content: center;
+    gap: 350px;
+}
