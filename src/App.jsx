@@ -4,10 +4,11 @@ import Servicos from "./components/Servicos";
 import Especialistas from "./components/Especialistas.jsx";
 import Contato from "./components/Contato.jsx";
 import Footer from "./components/Footer.jsx";
+import Login from "./pages/Login.jsx";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
 
 
-function App() {
-
+function LayoutPrincipal(){
     return (
         <>
             <Header />
@@ -20,4 +21,13 @@ function App() {
     )
 }
 
-export default App;
+function App(){
+    return (
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<LayoutPrincipal />} />
+                <Route path="/login" element={<Login/>} />
+            </Routes>
+        </BrowserRouter>
+    )
+}export default App;
