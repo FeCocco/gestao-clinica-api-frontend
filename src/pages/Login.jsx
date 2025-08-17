@@ -25,15 +25,6 @@ function Login() {
         setFormData({ email: '', nome: '', telefone: '', cpf: '', dataNascimento: '', senha: '' });
     };
 
-    const handleStepClick = (targetStep) => {
-        if (targetStep < step) {
-            setError('');
-            setSuccess('');
-            setStep(targetStep);
-            clearMessagesAndFields();
-        }
-    };
-
     const redirectToHome = () => {
         setTimeout(() => {
             alert("Login bem-sucedido! Redirecionando para a página principal...");
@@ -99,8 +90,13 @@ function Login() {
             if (!response.ok) throw new Error('Erro ao tentar cadastrar.');
 
             const novoUsuarioCriado = await response.json();
+
+            setFormData(novoUsuarioCriado);
+
             setNewUserId(novoUsuarioCriado.id);
+            setSuccess('Cadastro realizado com sucesso! Complete seu perfil.');
             setStep(4);
+
         } catch (err) {
             setError('Não foi possível realizar o cadastro.');
         }
@@ -128,7 +124,25 @@ function Login() {
 
     const handleBack = () => {
         setStep(1);
-        clearMessagesAndFields();
+        setError('');
+        setSuccess('');
+        setFormData({
+            email: '', nome: '', telefone: '', cpf: '', dataNascimento: '', senha: '',
+        });
+        setNewUserId(null);
+    };
+
+    const handleStepClick = (targetStep) => {
+        if (targetStep === 1) {
+            handleBack();
+            return;
+        }
+
+        if (targetStep < step) {
+            setError('');
+            setSuccess('');
+            setStep(targetStep);
+        }
     };
 
     const Stepper = () => {
