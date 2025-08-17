@@ -1,4 +1,5 @@
 import './Hero.css'
+import './Header.css'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, EffectFade } from 'swiper/modules';
 import 'swiper/css';
@@ -13,7 +14,7 @@ function Hero(){
                 <div className="hero-text-column">
                     <h1>A jornada para o seu sorriso perfeito começa aqui.</h1>
                     <p>Equipamentos de ponta e especialistas dedicados a cuidar da sua saúde bucal com o carinho e a atenção que você merece.</p>
-                    <a href="https://wa.me/551935247867" target="_blank" rel="noopener noreferrer" className="hero-button">
+                    <a href="https://wa.me/551935247867" target="_blank" rel="noopener noreferrer" className="agendar-button">
                         Agende sua Avaliação
                     </a>
                 </div>
