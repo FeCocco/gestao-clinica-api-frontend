@@ -1,3 +1,7 @@
+.clickable {
+    cursor: pointer;
+}
+
 .login-container {
     display: flex;
     flex-direction: column;
@@ -40,7 +44,7 @@
 .login-input {
     padding: 12px 15px;
     border-radius: 8px;
-    border: 1px solid var(--white);
+    border: 1px solid var(--dark-blue-text);
     font-size: 1rem;
     width: 100%;
     box-sizing: border-box;
@@ -111,8 +115,8 @@
     width: 35px;
     height: 35px;
     border-radius: 50%;
-    background-color: #4a5568;
-    color: #fff;
+    background-color: var(--dark-blue-text);
+    color: var(--white);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -158,4 +162,28 @@
 
 .step-line.completed {
     background-color: var(--purple-main);
+}
+
+.login-input:disabled,
+.login-button:disabled {
+    background-color: #f2f2f2;
+    color: #a0a0a0;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.login-button:disabled:hover {
+    background-color: #f2f2f2;
+    transform: none;
+    box-shadow: none;
+}
+
+.error-message {
+    color: #c0392b;
+    background-color: var(--white);
+    border: 1px solid #c0392b;
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 20px;
 }

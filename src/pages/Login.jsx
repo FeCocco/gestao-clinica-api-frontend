@@ -1,121 +1,295 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Login.css';
 
-// simulacao de e-mails já cadastrados. ***implementar backend***
-const registeredUsers = ['usuario@email.com', 'teste@clinica.com'];
+const API_URL = 'http://localhost:8080/api';
 
 function Login() {
-    const [step, setStep] = useState(1); // 1: Email, 2: Senha, 3: Cadastro
-    const [email, setEmail] = useState('');
+    const navigate = useNavigate();
+    const [step, setStep] = useState(1);
+    const [newUserId, setNewUserId] = useState(null);
+    const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
+    const [formData, setFormData] = useState({
+        email: '', nome: '', telefone: '', cpf: '', dataNascimento: '', senha: '',
+    });
 
-    const handleEmailSubmit = (e) => {
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({ ...prev, [name]: value }));
+    };
+
+    const clearMessagesAndFields = () => {
+        setError('');
+        setSuccess('');
+        setFormData({ email: '', nome: '', telefone: '', cpf: '', dataNascimento: '', senha: '' });
+    };
+
+    const handleStepClick = (targetStep) => {
+        if (targetStep < step) {
+            setError('');
+            setSuccess('');
+            setStep(targetStep);
+            clearMessagesAndFields();
+        }
+    };
+
+    const redirectToHome = () => {
+        setTimeout(() => {
+            alert("Login bem-sucedido! Redirecionando para a página principal...");
+            setStep(1);
+            clearMessagesAndFields();
+        }, 1500);
+    };
+
+    const handleEmailSubmit = async (e) => {
         e.preventDefault();
-        if (registeredUsers.includes(email)) {
-            setStep(2);
-        } else {
-            setStep(3);
+        setError('');
+        try {
+            const response = await fetch(`${API_URL}/usuarios/email/${formData.email}`);
+            if (!response.ok) throw new Error('Erro no servidor.');
+            const emailExists = await response.json();
+            if (emailExists) {
+                setStep(2);
+            } else {
+                setStep(3);
+            }
+        } catch (err) {
+            setError('Não foi possível verificar o e-mail.');
+        }
+    };
+
+    const handleLoginSubmit = async (e) => {
+        e.preventDefault();
+        setError('');
+        try {
+            const response = await fetch(`${API_URL}/login`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: formData.email, senha: formData.senha }),
+            });
+            if (!response.ok) throw new Error(await response.text() || 'E-mail ou senha inválidos.');
+
+            const loggedUser = await response.json();
+            if (!loggedUser.cpf || !loggedUser.telefone) {
+                setNewUserId(loggedUser.id);
+                setFormData(loggedUser);
+                setStep(4);
+            } else {
+                setSuccess(`Bem-vindo(a) de volta, ${loggedUser.nome}!`);
+                redirectToHome();
+            }
+        } catch (err) {
+            setError(err.message);
+        }
+    };
+
+    const handleRegisterSubmit = async (e) => {
+        e.preventDefault();
+        setError('');
+        const { nome, email, senha, dataNascimento, telefone } = formData;
+        const novoUsuario = { nome, email, senha, dataNascimento, telefone, role: 'CLIENTE' };
+
+        try {
+            const response = await fetch(`${API_URL}/usuarios`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(novoUsuario),
+            });
+            if (!response.ok) throw new Error('Erro ao tentar cadastrar.');
+
+            const novoUsuarioCriado = await response.json();
+            setNewUserId(novoUsuarioCriado.id);
+            setStep(4);
+        } catch (err) {
+            setError('Não foi possível realizar o cadastro.');
+        }
+    };
+
+    const handleUpdateProfile = async (e) => {
+        e.preventDefault();
+        setError('');
+        const dadosParaAtualizar = { cpf: formData.cpf };
+
+        try {
+            const response = await fetch(`${API_URL}/usuarios/${newUserId}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(dadosParaAtualizar),
+            });
+            if (!response.ok) throw new Error('Não foi possível atualizar o perfil.');
+
+            setSuccess('Perfil atualizado com sucesso! Bem-vindo(a)!');
+            redirectToHome();
+        } catch (err) {
+            setError(err.message);
         }
     };
 
     const handleBack = () => {
         setStep(1);
-        setEmail(email);
-    }
-
-    const renderStepContent = () => {
-        switch (step) {
-            case 1:
-                return (
-                    <form onSubmit={handleEmailSubmit} className="login-form">
-                        <h2>Acesse sua conta</h2>
-                        <p>Informe seu e-mail para continuar.</p>
-                        <input
-                            type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            placeholder="seu@email.com"
-                            required
-                            className="login-input"
-                        />
-                        <button type="submit" className="login-button">Continuar</button>
-                    </form>
-                );
-            case 2:
-                return (
-                    <form className="login-form">
-                        <div className="form-header">
-                            <button type="button" onClick={handleBack} className="back-button">←</button>
-                            <h2>Olá novamente!</h2>
-                        </div>
-                        <p>Seu e-mail: <strong>{email}</strong></p>
-                        <p>Agora, digite sua senha para acessar.</p>
-                        <input
-                            type="password"
-                            placeholder="Sua senha"
-                            required
-                            className="login-input"
-                        />
-                        <button type="submit" className="login-button">Entrar</button>
-                    </form>
-                );
-            case 3:
-                return (
-                    <form className="login-form">
-                        <div className="form-header">
-                            <button type="button" onClick={handleBack} className="back-button">←</button>
-                            <h2>Crie sua conta</h2>
-                        </div>
-                        <p>Ótimo! Para criar sua conta, preencha os campos abaixo.</p>
-                        <p>E-mail para cadastro: <strong>{email}</strong></p>
-                        <input
-                            type="text"
-                            placeholder="Nome completo"
-                            required
-                            className="login-input"
-                        />
-                        <input
-                            type="password"
-                            placeholder="Crie uma senha"
-                            required
-                            className="login-input"
-                        />
-                        <button type="submit" className="login-button">Cadastrar e Acessar</button>
-                    </form>
-                );
-            default:
-                return null;
-        }
+        clearMessagesAndFields();
     };
 
     const Stepper = () => {
-        // define qual etapa visual está ativa.
-        // se for o passo 2 (senha) ou 3 (cadastro), a etapa visual é a mesma (a segunda).
-        const isStep1Active = step === 1;
-        const isStep2Active = step === 2 || step === 3;
-        const isStep1Completed = step > 1; // a primeira etapa está completa se passamos dela
-
-        return (
-            <div className="stepper-container">
-                <div className="step-wrapper">
-                    <div className={`step-circle ${isStep1Completed ? 'completed' : ''} ${isStep1Active ? 'active' : ''}`}>
-                        {isStep1Completed ? '✔' : '1'}
+        if (step === 1 || step === 2) {
+            return (
+                <div className="stepper-container" style={{ width: '60%' }}>
+                    <div className="step-wrapper">
+                        <div
+                            className={`step-circle ${step === 1 ? 'active' : 'completed'} clickable`}
+                            onClick={() => handleStepClick(1)}
+                        >
+                            {step > 1 ? '✔' : '1'}
+                        </div>
+                    </div>
+                    <div className={`step-line ${step > 1 ? 'completed' : ''}`}></div>
+                    <div className="step-wrapper">
+                        <div className={`step-circle ${step === 2 ? 'active' : ''}`}>2</div>
                     </div>
                 </div>
-                <div className={`step-line ${isStep1Completed ? 'completed' : ''}`}></div>
-                <div className="step-wrapper">
-                    <div className={`step-circle ${isStep2Active ? 'active' : ''}`}>
-                        2
+            );
+        } else {
+            return (
+                <div className="stepper-container" style={{ width: '80%' }}>
+                    <div className="step-wrapper">
+                        <div className="step-circle completed clickable" onClick={() => handleStepClick(1)}>✔</div>
+                    </div>
+                    <div className="step-line completed"></div>
+                    <div className="step-wrapper">
+                        <div
+                            className={`step-circle ${step === 3 ? 'active' : 'completed'} ${step > 3 ? 'clickable' : ''}`}
+                            onClick={() => handleStepClick(3)}
+                        >
+                            {step > 3 ? '✔' : '2'}
+                        </div>
+                    </div>
+                    <div className={`step-line ${step > 3 ? 'completed' : ''}`}></div>
+                    <div className="step-wrapper">
+                        <div className={`step-circle ${step === 4 ? 'active' : ''}`}>3</div>
                     </div>
                 </div>
-            </div>
-        );
+            );
+        }
     };
 
+    const renderStepContent = () => {
+        if (step === 1) {
+            return (
+                <form onSubmit={handleEmailSubmit} className="login-form">
+                    <h2>Acesse sua conta</h2>
+                    <p>Informe seu e-mail para continuar.</p>
+                    <input
+                        name="email"
+                        type="email"
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        placeholder="seu@email.com"
+                        required
+                        className="login-input"
+                    />
+                    <button type="submit" className="login-button">Continuar</button>
+                </form>
+            );
+        } else if (step === 2) {
+            return (
+                <form onSubmit={handleLoginSubmit} className="login-form">
+                    <div className="form-header">
+                        <button type="button" onClick={handleBack} className="back-button">←</button>
+                        <h2>Olá novamente!</h2>
+                    </div>
+                    <p>Digite sua senha para acessar.</p>
+                    <input
+                        name="senha"
+                        type="password"
+                        value={formData.senha}
+                        onChange={handleInputChange}
+                        placeholder="Sua senha"
+                        required
+                        className="login-input"
+                    />
+                    <button type="submit" className="login-button">Entrar</button>
+                </form>
+            );
+        } else if (step === 3) {
+            const isRegistrationComplete = newUserId !== null;
+            return (
+                <form onSubmit={handleRegisterSubmit} className="login-form">
+                    <div className="form-header">
+                        {!isRegistrationComplete && (
+                            <button type="button" onClick={handleBack} className="back-button">←</button>
+                        )}
+                        <h2>Crie sua conta</h2>
+                    </div>
+                    <p>Ótimo! Para criar sua conta, preencha os campos abaixo.</p>
+                    <input
+                        name="nome"
+                        type="text"
+                        value={formData.nome}
+                        onChange={handleInputChange}
+                        placeholder="Nome completo"
+                        required
+                        className="login-input"
+                        disabled={isRegistrationComplete}
+                    />
+                    <input
+                        name="telefone"
+                        type="text"
+                        value={formData.telefone}
+                        onChange={handleInputChange}
+                        placeholder="Telefone"
+                        required
+                        className="login-input"
+                        disabled={isRegistrationComplete}
+                    />
+                    <input
+                        name="dataNascimento"
+                        type="date"
+                        value={formData.dataNascimento}
+                        onChange={handleInputChange}
+                        required
+                        className="login-input"
+                        disabled={isRegistrationComplete}
+                    />
+                    <input
+                        name="senha"
+                        type="password"
+                        value={formData.senha}
+                        onChange={handleInputChange}
+                        placeholder="Crie uma senha"
+                        required
+                        className="login-input"
+                        disabled={isRegistrationComplete}
+                    />
+                    <button type="submit" className="login-button" disabled={isRegistrationComplete}>Cadastrar e Acessar</button>
+                </form>
+            );
+        } else if (step === 4) {
+            return (
+                <form onSubmit={handleUpdateProfile} className="login-form">
+                    <div className="form-header"><h2>Complete seu Perfil</h2></div>
+                    <p>Para oferecermos um atendimento personalizado, que tal preencher os campos opcionais abaixo?</p>
+                    <input
+                        name="cpf"
+                        type="text"
+                        value={formData.cpf || ''}
+                        onChange={handleInputChange}
+                        placeholder="CPF (Opcional)"
+                        className="login-input"
+                    />
+                    <button type="submit" className="login-button">Finalizar e Entrar</button>
+                </form>
+            );
+        }
+        return null;
+    };
 
     return (
         <div className="login-container">
             <div className="login-box">
                 <Stepper />
+                {error && <p className="error-message">{error}</p>}
+                {success && <p className="success-message">{success}</p>}
                 {renderStepContent()}
             </div>
         </div>
