@@ -4,9 +4,9 @@ import logo from '../assets/logo.png';
 
 function Footer() {
     return (
-        <footer className="footer-container">
+        <footer id="footer">
             <div className="footer-content">
-                <div className="footer-column" id="footer-about">
+                <div className="footer-column">
                     <img src={logo} alt="CliniCare Odontologia" className="footer-logo" />
                     <p className="footer-description">
                         Odontologia moderna e especializada para toda a família. Cuidamos de você com tecnologia e carinho.
@@ -33,10 +33,10 @@ function Footer() {
                 </div>
             </div>
 
-            <div className="footer-bottom-bar">
+            <div className="footer-info">
                 <p>© 2025 CliniCare Odontologia. Todos os direitos reservados.</p>
                 <p>Responsável Técnico: Dra. Bruna Giacomini Cocco - CRO/SP: 130.170</p>
             </div>
         </footer>
     );
-}export default Footer;
+} export default Footer;

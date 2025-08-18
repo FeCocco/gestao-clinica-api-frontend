@@ -50,27 +50,3 @@ nav a:hover, .header-actions a:not(.agendar-button):hover {
     flex-shrink: 0;
     justify-content: flex-end;
 }
-
-.agendar-button {
-    color: var(--white);
-    background-color: var(--purple-main);
-    border: 1px solid transparent;
-    cursor: pointer;
-    border-radius: 2rem;
-    padding: 12px 24px;
-    font-size: 0.95rem;
-    font-weight: bold;
-    white-space: nowrap;
-    transition: all 0.3s ease;
-    text-align: center;
-    display: inline-block;
-    text-decoration: none;
-}
-
-.agendar-button:hover {
-    box-shadow: 0 4px 15px rgba(93, 58, 155, 0.4);
-    background-color: #4a2d7b;
-    transform: translateY(-2px);
-    color: var(--white);
-    text-decoration: underline;
-}
