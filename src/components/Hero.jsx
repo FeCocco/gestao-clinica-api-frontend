@@ -9,16 +9,16 @@ import heroImage2 from '../assets/hero2.jpg';
 function Hero(){
     return (
         <div id="hero">
-            <section id="hero-container">
-                <div className="hero-text-column">
+            <section className="hero_container">
+                <div className="hero_text_column">
                     <h1>A jornada para o seu sorriso perfeito começa aqui.</h1>
                     <p>Equipamentos de ponta e especialistas dedicados a cuidar da sua saúde bucal com o carinho e a atenção que você merece.</p>
                     <a href="https://wa.me/551935247867" target="_blank" rel="noopener noreferrer" className="agendar-button">
                         Agende sua Avaliação
                     </a>
                 </div>
-                <div className="hero-image-column">
-                    <Swiper modules={[Autoplay, EffectFade]} effect={"fade"} loop={true} autoplay={{ delay: 4000, disableOnInteraction: false }} className="hero-swiper">
+                <div className="hero_image_column">
+                    <Swiper modules={[Autoplay, EffectFade]} effect={"fade"} loop={true} autoplay={{ delay: 4000, disableOnInteraction: false }} className="hero_swiper">
                         <SwiperSlide>
                             <img src={heroImage1} alt="Recepção confortável da clínica CliniCare" />
                         </SwiperSlide>

@@ -73,3 +73,16 @@
     color: var(--light-gray-text);
     font-size: 0.9rem;
 }
+
+@media (max-width: 954px) {
+    .footer-content{
+        flex-direction: column;
+        flex-grow: 0;
+
+    }
+
+    .footer-info{
+        flex-direction: column;
+        flex-grow: 0;
+    }
+}

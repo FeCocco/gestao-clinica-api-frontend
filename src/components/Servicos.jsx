@@ -9,7 +9,7 @@ function Servicos() {
     return (
         <div id="servicos">
             <h2>Nossos Serviços</h2>
-            <div className="servicos_wrapper">
+            <div className="servicos_wrap">
                 <div className="servicos_card">
                     <svg width="100" height="100" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <image href={ImplantePhoto} width="24" height="24" />

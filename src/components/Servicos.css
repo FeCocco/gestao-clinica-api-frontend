@@ -3,7 +3,7 @@
     text-align: center;
 }
 
-.servicos_wrapper{
+.servicos_wrap{
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -25,4 +25,12 @@
 
 .servicos_card:hover{
     outline: var(--purple-main) 1px solid;
+}
+
+@media (max-width: 954px) {
+    .servicos_wrap{
+        flex-direction: column;
+        flex-grow: 0;
+
+    }
 }
