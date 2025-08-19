@@ -2,7 +2,7 @@
   "name": "sistema-agendamento-frontend",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://github.com/FeCocco/-gestao-clinica-api-frontend.git",
+  "homepage": "https://fecocco.github.io/gestao-clinica-api-frontend/",
   "type": "module",
   "scripts": {
     "dev": "vite",
