@@ -6,7 +6,8 @@
 
 .especialistas-wrap{
     display: flex;
-    justify-content: space-between;
+    flex-wrap: wrap; /* Adicionado para garantir a quebra de linha */
+    justify-content: center; /* Alterado para centralizar */
     margin: 0 auto;
     gap: 30px;
     max-width: 85vw;
@@ -16,7 +17,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-width: 15vw;
+    min-width: 250px; /* Aumentado para melhor consistência */
+    flex: 1; /* Permite que o card seja flexível */
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border-radius: 16px;
     padding: 10px 0 10px 0;
