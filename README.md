@@ -46,7 +46,7 @@ Please follow the instructions in the backend's `README.md` to clone, set up the
 
 1.  **Clone the repository:**
     ```bash
-    git clone [https://github.com/FeCocco/gestao-clinica-api-frontend.git](https://github.com/FeCocco/gestao-clinica-api-frontend.git)
+    git clone [https://github.com/FeCocco/gestao-clinica-api-frontend.git]
     ```
 
 2.  **Navigate to the project folder:**
