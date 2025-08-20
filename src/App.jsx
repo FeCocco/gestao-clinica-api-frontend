@@ -6,6 +6,7 @@ import Especialistas from "./components/Especialistas.jsx";
 import Contato from "./components/Contato.jsx";
 import Footer from "./components/Footer.jsx";
 import Login from "./pages/Login.jsx";
+import Dashboard from "./pages/Dashboard.jsx";
 
 function LayoutPrincipal() {
     return (
@@ -25,6 +26,7 @@ function App() {
         <Routes>
             <Route path="/" element={<LayoutPrincipal />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
     )
 } export default App;

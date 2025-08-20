@@ -28,7 +28,7 @@ function Login() {
     const redirectToHome = () => {
         setTimeout(() => {
             alert("Login bem-sucedido! Redirecionando para a página principal...");
-            setStep(1);
+            navigate('/dashboard');
             clearMessagesAndFields();
         }, 1500);
     };

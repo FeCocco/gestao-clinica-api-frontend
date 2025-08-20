@@ -1,0 +1,19 @@
+:root {
+    --fc-small-font-size: .85em;
+    --fc-neutral-text-color: #808080;
+
+    --fc-button-text-color: var(--light-gray-text);
+    --fc-button-bg-color: var(--purple-main);
+    --fc-button-border-color: var(--purple-main);
+    --fc-button-hover-bg-color: var(--dark-blue-text);
+    --fc-button-active-bg-color: var(--dark-blue-text);
+
+    --fc-event-text-color: var(--white);
+
+    --fc-non-business-color: rgba(215, 215, 215, 0.3);
+    --fc-bg-event-color: rgb(143, 223, 130);
+    --fc-bg-event-opacity: 0.3;
+    --fc-highlight-color: rgba(188, 232, 241, 0.3);
+    --fc-today-bg-color: rgba(255, 220, 40, 0.15);
+    --fc-now-indicator-color: red;
+}
