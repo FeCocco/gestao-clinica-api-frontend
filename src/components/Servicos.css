@@ -33,4 +33,8 @@
         flex-grow: 0;
 
     }
+
+    .servicos_card:hover{
+        outline: none;
+    }
 }

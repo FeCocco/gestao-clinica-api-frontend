@@ -38,6 +38,9 @@
         flex-grow: 0;
 
     }
+    .especialistas_card:hover{
+        outline: none;
+    }
 }
 
 
