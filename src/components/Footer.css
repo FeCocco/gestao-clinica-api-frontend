@@ -82,6 +82,8 @@
     }
 
     .footer-info{
+        max-width: 85vw;
+        text-align: center;
         flex-direction: column;
         flex-grow: 0;
     }
