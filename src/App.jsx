@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import Header from "./components/Header";
+import BotaoRoxo from "./components/BotaoRoxo/BotaoRoxo.jsx";
 import Hero from "./components/Hero";
 import Servicos from "./components/Servicos";
 import Especialistas from "./components/Especialistas.jsx";

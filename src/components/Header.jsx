@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import './Header.css';
 import './HeaderEffect.css';
 import logo from '../assets/mini-logo.png';
+import BotaoRoxo from "./BotaoRoxo/BotaoRoxo.jsx";
 
 function Header() {
     const [scrolled, setScrolled] = useState(false);
@@ -48,7 +49,7 @@ function Header() {
                             </ul>
                         </nav>
                         <div className="header-actions">
-                            <a href="https://wa.me/551935247867" className="agendar-button">Agendar Avaliação</a>
+                            <BotaoRoxo/>
                             <Link to="/login" className='link-sistema'>Sistema</Link>
                         </div>
                     </header>
