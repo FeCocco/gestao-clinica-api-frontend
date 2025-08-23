@@ -1,11 +1,9 @@
 import { useState, useEffect } from 'react';
-import { Link as ScrollLink } from 'react-scroll';
-import { Link } from 'react-router-dom';
 import './Header.css';
 import './HeaderEffect.css';
 import logo from '../assets/mini-logo.png';
 
-function Header({ children }) {
+function Header({ children, mobileContent }) {
     const [scrolled, setScrolled] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
 
@@ -49,20 +47,7 @@ function Header({ children }) {
             <div className={`backdrop ${menuOpen ? 'active' : ''}`} onClick={closeMenu}></div>
 
             <nav className={`mobile-nav ${menuOpen ? 'active' : ''}`}>
-                <ul>
-                    <li><ScrollLink to="hero" spy={true} smooth={true} offset={-90} duration={500}
-                                    onClick={closeMenu}>Início</ScrollLink></li>
-                    <li><ScrollLink to="servicos" spy={true} smooth={true} offset={-80} duration={500}
-                                    onClick={closeMenu}>Serviços</ScrollLink></li>
-                    <li><ScrollLink to="especialistas" spy={true} smooth={true} offset={-80} duration={500}
-                                    onClick={closeMenu}>Nossa Equipe</ScrollLink></li>
-                    <li><ScrollLink to="contato" spy={true} smooth={true} offset={-80} duration={500}
-                                    onClick={closeMenu}>Contato</ScrollLink></li>
-                </ul>
-                <div className="header-actions-mobile">
-                    <a href="https://wa.me/551935247867" className="agendar-button">Agendar Avaliação</a>
-                    <Link to="/login" className='link-sistema' onClick={closeMenu}>Sistema</Link>
-                </div>
+                {mobileContent && mobileContent(closeMenu)}
             </nav>
         </div>
     );
